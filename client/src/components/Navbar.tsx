@@ -66,7 +66,7 @@ function Navbar() {
           <li>
             <Button
               variant="ghost"
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/available-rooms")}
               className="hidden md:flex dark:hover:bg-zinc-700"
             >
               Vacant Rooms
@@ -171,7 +171,7 @@ function Navbar() {
           <Button
             variant="outline"
             onClick={() => {
-              navigate("/");
+              navigate("/available-rooms");
               setOpenNav(!openNav);
             }}
             className="md:hidden w-full rounded-none py-5 bg-zinc-200 hover:bg-zinc-300 dark:bg-zinc-800 hover:dark:bg-zinc-600"

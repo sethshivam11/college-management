@@ -22,6 +22,7 @@
     "axios": "^1.6.8",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "gsap": "^3.12.5",
     "lucide-react": "^0.350.0",
     "next-themes": "^0.3.0",
     "react": "^18.2.0",
