@@ -38,6 +38,7 @@ import {
   AlertDialogTrigger,
 } from "./ui/alert-dialog";
 import { Trash2 } from "lucide-react";
+import EditTeamModal from "./EditTeamModal";
 
 function AddRoom() {
   const { rooms, addRooms, fetchRooms, deleteRoom } = useRoom();
@@ -65,7 +66,6 @@ function AddRoom() {
     },
   ]);
 
-  
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const index = e.target.parentElement?.parentElement?.dataset.index;
     if (!index) return console.log("Index not found");
@@ -78,7 +78,7 @@ function AddRoom() {
       })
     );
   }
-  
+
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     addRooms(body);
@@ -90,7 +90,7 @@ function AddRoom() {
       },
     ]);
   }
-  
+
   React.useEffect(() => {
     body.map(function ({ roomNumber, capacity, location }) {
       if (
@@ -244,7 +244,8 @@ function AddRoom() {
                   <TableCell>{room.roomNumber}</TableCell>
                   <TableCell>{room.capacity}</TableCell>
                   <TableCell>{room.location}</TableCell>
-                  <TableCell>
+                  <TableCell className="flex gap-2">
+                  <EditTeamModal TeamInfo={room} />
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
                         <Button size="icon" variant="destructive">
@@ -270,6 +271,7 @@ function AddRoom() {
                         </AlertDialogFooter>
                       </AlertDialogContent>
                     </AlertDialog>
+                    
                   </TableCell>
                 </TableRow>
               );
