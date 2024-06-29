@@ -32,6 +32,7 @@ interface Context {
   unbookRoom: Function;
   fetchVacantRooms: Function;
   getBookedRooms: Function;
+  updateRooms: Function;
 }
 
 const initialState = {
@@ -54,6 +55,7 @@ const initialState = {
   unbookRoom: () => null,
   fetchVacantRooms: () => null,
   getBookedRooms: () => null,
+  updateRooms: () => null
 };
 
 const RoomContext = React.createContext<Context>(initialState);
@@ -164,6 +166,41 @@ export function RoomProvider({ children }: React.PropsWithChildren<{}>) {
       })
       .catch((err) => {
         console.warn(err.response.data);
+        toast.error(err.response.data.message || "Something broke!", {
+          id: toastLoading,
+        });
+      })
+      .finally(() => setLoading(false));
+  }
+
+  async function updateRooms(roomNumber:string, capacity:string, location:string, roomId:string) {
+    const toastLoading = toast.loading("Please wait...");
+    setLoading(true);
+    axios
+      .put(
+        "/api/v1/room/update",
+        { roomNumber:roomNumber,
+          capacity:capacity,
+          location:location,
+          roomId:roomId
+         },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          fetchRooms()
+          toast.success(res.data.message, {
+            id: toastLoading,
+          });
+        }
+      })
+      .catch((err) => {
+        console.warn(err.response.data);
+        console.log(err)
         toast.error(err.response.data.message || "Something broke!", {
           id: toastLoading,
         });
@@ -316,6 +353,7 @@ export function RoomProvider({ children }: React.PropsWithChildren<{}>) {
         bookRoom,
         unbookRoom,
         getBookedRooms,
+        updateRooms
       }}
     >
       {children}
